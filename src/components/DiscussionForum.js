@@ -1,52 +1,60 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+
+
+import DiscussionBoard from 'react-discussion-board'
+
+import 'react-discussion-board/dist/index.css'
 import axios from "axios";
-import EventCard from "./EventCard";
 
-const styles = (theme) => ({
-  root: {
-    display: "flex",
-  },
-  root_input: {
-    paddingLeft: "8px",
-    background: "#FFFFFF 0% 0% no-repeat padding-box",
-    border: "1px solid grey",
-    borderRadius: "5px",
-    font: "normal normal 300 17px/35px Roboto",
-    color: "grey",
-    height: "40px",
-    marginRight: "18px",
-  },
-});
 
-const eventBaseUrl = "http://localhost:8080/sports/events";
 
+
+const eventBaseUrl = "http://localhost:8080/forum/discussions";
 class DiscussionForum extends React.Component {
   state = {
-   eventDetails: []
-  };
+    allPosts: []
+   };
 
-  componentWillMount(){
+   componentWillMount(){
+    const {
+      allPosts
+    } = this.state;
     axios.get(eventBaseUrl).then((res) => {
-      this.setState({eventDetails:res.data})
+      const postArray=[];
+      res.data.map((index)=>{
+        postArray.push({name:index.username,content:index.text, date: new Date('01 Jan 2020 09:12:00 GMT')})
+      })
+      this.setState({allPosts:postArray})
     });
+   }
 
+    submitPost = (text) => {
+      const {
+        allPosts
+      } = this.state;
+    const curDate = new Date()
+    this.setState({allPosts:[...allPosts,{name:'bala',content:text,date:curDate}]})
+    const params = {
+       text:text,
+       username:'bala',
+       userId:'123',
+       time:curDate
+    }
+
+    axios.post(eventBaseUrl,params).then((res) => {
+     console.log(res);
+    });
   }
 
-  render() {
-    const {
-      eventDetails
-    } = this.state;
-    const { classes } = this.props;
-    
+  render(){
+   const{allPosts} = this.state;
     return (
-      <div className="flex justify-center">
-        {eventDetails.map((data)=>(
-          <EventCard eventDetails={data}/>
-        ))}
+      <div className='App'>
+        <DiscussionBoard posts={allPosts} onSubmit={this.submitPost} />
       </div>
-    );
+    )
+
   }
 }
 
-export default withStyles(styles)(DiscussionForum);
+export default DiscussionForum
