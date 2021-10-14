@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
 import Alert from "@mui/material/Alert";
+import { withRouter } from "react-router";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -34,6 +35,9 @@ class Signup extends React.Component {
 
   handleSubmit = () => {
     const { username, email, phoneNumber, password } = this.state;
+    const {
+      history: { push },
+    } = this.props;
     if (
       username === "" ||
       email === "" ||
@@ -44,6 +48,10 @@ class Signup extends React.Component {
       return;
     }
     this.setState({ shouldAlertDisplay: false });
+    push({
+      pathname: "/home",
+      data: "hi", // your data array of objects
+    });
     //call API here
   };
 
@@ -88,10 +96,7 @@ class Signup extends React.Component {
           </Button>
           <div className="flex">
             <p className="text-lg">Existing User?</p>
-            <Link
-              to="/login"
-              className="text-blue-500 font-semibold text-lg px-1"
-            >
+            <Link to="/" className="text-blue-500 font-semibold text-lg px-1">
               Login
             </Link>
           </div>
@@ -104,4 +109,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default withRouter(Signup);

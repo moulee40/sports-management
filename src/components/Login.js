@@ -3,6 +3,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
 import Alert from "@mui/material/Alert";
+import { withRouter } from "react-router";
 
 class Login extends React.Component {
   constructor(props) {
@@ -24,12 +25,19 @@ class Login extends React.Component {
 
   handleLogin = () => {
     const { username, password } = this.state;
+    const {
+      history: { push },
+    } = this.props;
     if (username === "" || password === "") {
       this.setState({ shouldAlertDisplay: true });
       return;
     }
     this.setState({ shouldAlertDisplay: false });
-    //call API here
+    //Call Api here
+    push({
+      pathname: "/home",
+      data: "hi", // your data array of objects
+    });
   };
 
   render() {
@@ -74,4 +82,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
