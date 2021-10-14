@@ -7,9 +7,9 @@ class Main extends React.Component {
   }
   render() {
     return (
-        <h2 className="text-4xl font-semibold text-indigo-900">
-          Sports Management
-        </h2>
+      <h2 className="text-4xl font-semibold text-indigo-900 text-center">
+        Sports Management
+      </h2>
     );
   }
 }
