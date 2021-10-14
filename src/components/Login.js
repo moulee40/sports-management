@@ -4,7 +4,9 @@ import Button from "@mui/material/Button";
 import React from "react";
 import Alert from "@mui/material/Alert";
 import { withRouter } from "react-router";
+import axios from "axios";
 
+const eventBaseUrl = "http://localhost:8080/user/login";
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -33,10 +35,18 @@ class Login extends React.Component {
       return;
     }
     this.setState({ shouldAlertDisplay: false });
-    //Call Api here
-    push({
-      pathname: "/home",
-      data: "hi", // your data array of objects
+    const reqJson={
+      username:username,password:password
+    }
+    axios.post(eventBaseUrl,reqJson).then((res) => {
+     if(res)
+     {
+       localStorage.setItem("username",username)
+      push({
+        pathname: "/home",
+        username: username, // your data array of objects
+      });
+     }
     });
   };
 

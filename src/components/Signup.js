@@ -4,6 +4,9 @@ import Button from "@mui/material/Button";
 import React from "react";
 import Alert from "@mui/material/Alert";
 import { withRouter } from "react-router";
+import axios from "axios";
+
+const eventBaseUrl = "http://localhost:8080/user/register";
 
 class Signup extends React.Component {
   constructor(props) {
@@ -48,11 +51,19 @@ class Signup extends React.Component {
       return;
     }
     this.setState({ shouldAlertDisplay: false });
-    push({
-      pathname: "/home",
-      data: "hi", // your data array of objects
+   
+    const reqJson={
+     username:username,
+     password:password,
+      email:email,
+       phone:phoneNumber
+    }
+    axios.post(eventBaseUrl,reqJson).then((res) => {
+      if(res)
+      {
+        push('/');
+      }
     });
-    //call API here
   };
 
   render() {
@@ -66,6 +77,7 @@ class Signup extends React.Component {
           id="outlined-username"
           value={username}
           label="Username"
+          autoComplete="off"
           onChange={(e) => this.handleUsernameChange(e)}
         />
         <TextField
