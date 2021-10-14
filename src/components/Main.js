@@ -1,4 +1,5 @@
 import React from "react";
+import Tab from "./Tab";
 
 class Main extends React.Component {
   constructor(props) {
@@ -7,9 +8,12 @@ class Main extends React.Component {
   }
   render() {
     return (
-      <h2 className="text-4xl font-semibold text-indigo-900 text-center">
-        Sports Management
-      </h2>
+      <div className="space-y-5 h-screen flex flex-col">
+        <h2 className="text-4xl font-semibold text-indigo-900">
+         Sports Management
+        </h2>
+        <Tab />
+      </div>
     );
   }
 }
