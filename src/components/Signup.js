@@ -2,26 +2,90 @@ import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
+import Alert from "@mui/material/Alert";
 
 class Signup extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      username: "",
+      email: "",
+      phoneNumber: "",
+      password: "",
+      shouldAlertDisplay: false,
+    };
   }
+
+  handleUsernameChange = (e) => {
+    this.setState({ username: e.target.value });
+  };
+
+  handleEmailChange = (e) => {
+    this.setState({ email: e.target.value });
+  };
+
+  handlePhoneNumberChange = (e) => {
+    this.setState({ phoneNumber: e.target.value });
+  };
+
+  handlePasswordChange = (e) => {
+    this.setState({ password: e.target.value });
+  };
+
+  handleSubmit = () => {
+    const { username, email, phoneNumber, password } = this.state;
+    if (
+      username === "" ||
+      email === "" ||
+      phoneNumber === "" ||
+      password === ""
+    ) {
+      this.setState({ shouldAlertDisplay: true });
+      return;
+    }
+    this.setState({ shouldAlertDisplay: false });
+    //call API here
+  };
+
   render() {
+    const { username, email, phoneNumber, password, shouldAlertDisplay } =
+      this.state;
     return (
       <div className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500">
         <h2 className="text-4xl font-semibold text-blue-800">Signup</h2>
-        <TextField required id="outlined-username" label="Username" />
-        <TextField required id="outlined-email" label="Email" />
-        <TextField required id="outlined-phone" label="Phone Number" />
         <TextField
+          required
+          id="outlined-username"
+          value={username}
+          label="Username"
+          onChange={(e) => this.handleUsernameChange(e)}
+        />
+        <TextField
+          required
+          id="outlined-email"
+          value={email}
+          label="Email"
+          onChange={(e) => this.handleEmailChange(e)}
+        />
+        <TextField
+          required
+          id="outlined-phone"
+          value={phoneNumber}
+          label="Phone Number"
+          onChange={(e) => this.handlePhoneNumberChange(e)}
+        />
+        <TextField
+          value={password}
+          required
           id="outlined-password-input"
           label="Password"
           type="password"
+          onChange={(e) => this.handlePasswordChange(e)}
         />
         <div className="flex items-center justify-between">
-          <Button variant="contained">Submit</Button>
+          <Button variant="contained" onClick={this.handleSubmit}>
+            Submit
+          </Button>
           <div className="flex">
             <p className="text-lg">Existing User?</p>
             <Link
@@ -32,6 +96,9 @@ class Signup extends React.Component {
             </Link>
           </div>
         </div>
+        {shouldAlertDisplay && (
+          <Alert severity="error">Field cannot be empty</Alert>
+        )}
       </div>
     );
   }

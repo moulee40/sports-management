@@ -9,9 +9,9 @@ function App() {
   return (
     <BrowserRouter>
       <div className="flex flex-col min-h-screen">
-        {/* <Main /> */}
         <Route path="/login" component={Login}></Route>
         <Route path="/signup" component={Signup}></Route>
+        <Route path="/home" component={Main}></Route>
       </div>
     </BrowserRouter>
   );
