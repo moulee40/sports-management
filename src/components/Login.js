@@ -2,13 +2,38 @@ import { Link } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import React from "react";
+import Alert from "@mui/material/Alert";
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      username: "",
+      password: "",
+      shouldAlertDisplay: false,
+    };
   }
+
+  handleUsernameChange = (e) => {
+    this.setState({ username: e.target.value });
+  };
+
+  handlePasswordChange = (e) => {
+    this.setState({ password: e.target.value });
+  };
+
+  handleLogin = () => {
+    const { username, password } = this.state;
+    if (username === "" || password === "") {
+      this.setState({ shouldAlertDisplay: true });
+      return;
+    }
+    this.setState({ shouldAlertDisplay: false });
+    //call API here
+  };
+
   render() {
+    const { username, password, shouldAlertDisplay } = this.state;
     return (
       <div className="flex flex-col space-y-5 max-w-md mx-auto my-16 min-w-500">
         <div className="flex items-center justify-between">
@@ -23,13 +48,27 @@ class Login extends React.Component {
             </Link>
           </div>
         </div>
-        <TextField required id="outlined-required" label="Username" />
+        <TextField
+          value={username}
+          required
+          id="outlined-required"
+          label="Username"
+          onChange={(e) => this.handleUsernameChange(e)}
+        />
         <TextField
           id="outlined-password-input"
+          required
           label="Password"
           type="password"
+          value={password}
+          onChange={(e) => this.handlePasswordChange(e)}
         />
-        <Button variant="contained">Login</Button>
+        <Button variant="contained" onClick={this.handleLogin}>
+          Login
+        </Button>
+        {shouldAlertDisplay && (
+          <Alert severity="error">Field cannot be empty</Alert>
+        )}
       </div>
     );
   }
