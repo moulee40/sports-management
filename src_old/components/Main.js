@@ -26,6 +26,7 @@ class Main extends React.Component {
   };
 
   render() {
+    // const { data } = this.props.location;
     return (
       <div className="space-y-5 h-screen flex flex-col">
         <div className="flex justify-between items-center">

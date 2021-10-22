@@ -7,7 +7,6 @@ import Tab from '@material-ui/core/Tab';
 import OngoingEvents from './OngoingEvents';
 import UpcomingEvents from './UpcomingEvents';
 import DiscussionForum from './DiscussionForum';
-import LastTab from './LastTab';
 
 
 const styles = theme => ({
@@ -38,13 +37,11 @@ class SimpleTabs extends React.Component {
             <Tab  label="Ongoing Events" href="#basic-tabs"/>
             <Tab  label="Upcoming Events" href="#basic-tabs"/>
             <Tab label="Discussion Forum" href="#basic-tabs" />
-            <Tab label="Feedback" href="#basic-tabs" />
           </Tabs>
         </AppBar>
         {value === 0 && <OngoingEvents/>}
         {value === 1 && <UpcomingEvents/>}
         {value === 2 && <DiscussionForum/>}
-        {value === 3 && <LastTab/>}
       </div>
     );
   }
